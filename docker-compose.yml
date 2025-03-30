@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-chat-db
+    environment:
+      MYSQL_ROOT_PASSWORD: qwer1234
+      MYSQL_DATABASE: chat_db
+    ports:
+      - "3308:3306"  # 로컬에서 3308 포트를 컨테이너의 3306 포트로 매핑
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"  # 로컬에서 Redis 포트를 컨테이너와 동일하게 매핑
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
