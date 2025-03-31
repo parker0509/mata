@@ -1,3 +1,21 @@
+import React from "react";
+import Game from "./Game";
+
+function App() {
+    return (
+        <div>
+            <h1>메타버스 채팅</h1>
+            <Game />
+        </div>
+    );
+}
+
+export default App;
+
+
+
+
+/*
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
@@ -22,3 +40,4 @@ function App() {
 }
 
 export default App;
+*/
