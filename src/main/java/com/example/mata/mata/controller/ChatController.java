@@ -10,6 +10,8 @@ public class ChatController {
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
     public String sendMessage(String message) {
+
+        System.out.println("Received message: " + message);
         return message; // 받은 메시지를 모든 클라이언트에게 전송
     }
 }

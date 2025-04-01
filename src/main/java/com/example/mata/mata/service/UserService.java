@@ -1,3 +1,4 @@
+/*
 package com.example.mata.mata.service;
 
 import com.example.mata.mata.domain.Player;
@@ -29,3 +30,4 @@ public class UserService {
                 .flatMap(playerRepository::findByUser);
     }
 }
+*/

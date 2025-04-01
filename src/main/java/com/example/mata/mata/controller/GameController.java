@@ -1,53 +1,42 @@
 package com.example.mata.mata.controller;
 
 import com.example.mata.mata.domain.Player;
-import com.example.mata.mata.domain.User;
 import com.example.mata.mata.repository.PlayerRepository;
-import com.example.mata.mata.repository.UserRepository;
+
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+    @Controller
+    class GameController {
 
-@Controller
-@NoArgsConstructor
-public class GameController {
+        private final SimpMessagingTemplate messagingTemplate;
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PlayerRepository playerRepository;
-
-    // 각 플레이어의 위치를 저장할 맵 (Player ID를 키로 사용)
-    private Map<Long, Player> players = new ConcurrentHashMap<>();
-
-    @MessageMapping("/move")
-    @SendTo("/topic/players")
-    public Player move(Player player) {
-        // player의 user_id를 사용해 User를 찾고 설정
-        User user = userRepository.findById(player.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        player.setUser(user);
-
-        // player ID로 위치를 업데이트
-        players.put(player.getId(), player);
-        return player;
-    }
-
-    @MessageMapping("/register")
-    public void registerPlayer(Player player) {
-        Optional<User> user = userRepository.findById(player.getId());
-        if (user.isPresent()) {
-            player.setUser(user.get());  // User 정보를 player에 설정
-            playerRepository.save(player);
-        } else {
-            throw new RuntimeException("User not found");
+        public GameController(SimpMessagingTemplate messagingTemplate) {
+            this.messagingTemplate = messagingTemplate;
         }
-    }
+
+
+        @MessageMapping("/move")  // 클라이언트에서 이동 요청을 받음
+        @SendTo("/topic/players")  // 해당 메시지를 /topic/players로 모든 클라이언트에게 전달
+        public Player movePlayer(@RequestBody Player player) {
+            // 플레이어의 ID와 위치 정보 처리
+            System.out.println("Received move request for player " + player.getId() + ": " + player.getX() + ", " + player.getY());
+            return player;  // 이동 정보를 포함하여 다른 클라이언트로 전송
+        }
+
+
+        @MessageMapping("/register") // 플레이어가 서버에 접속했을 때
+        public void registerPlayer(@RequestBody Player player) {
+            // 새로운 플레이어 정보 클라이언트들에게 전송
+            messagingTemplate.convertAndSend("/topic/players", player);
+        }
 
 }

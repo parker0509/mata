@@ -1,3 +1,4 @@
+/*
 package com.example.mata.mata.repository;
 
 import com.example.mata.mata.domain.User;
@@ -10,3 +11,4 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);  // 🔹 Optional로 반환
 }
+*/

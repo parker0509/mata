@@ -1,10 +1,9 @@
+/*
 package com.example.mata.mata.controller;
 
 import com.example.mata.mata.domain.Player;
-import com.example.mata.mata.domain.User;
 import com.example.mata.mata.dto.UserDto;
 import com.example.mata.mata.repository.PlayerRepository;
-import com.example.mata.mata.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private PlayerRepository playerRepository;
     @Autowired
@@ -43,3 +40,4 @@ public class AuthController {
         }
     }
 }
+*/

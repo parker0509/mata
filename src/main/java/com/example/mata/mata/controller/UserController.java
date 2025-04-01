@@ -1,6 +1,7 @@
+/*
 package com.example.mata.mata.controller;
 
-import com.example.mata.mata.dto.PlayerResponseDto;
+
 import com.example.mata.mata.dto.UserDto;
 import com.example.mata.mata.domain.User;
 import com.example.mata.mata.domain.Player;
@@ -67,3 +68,4 @@ public class UserController {
 
 
 }
+*/
